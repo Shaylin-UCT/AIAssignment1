@@ -23,7 +23,7 @@ def iterate(vars, mainVariable):
             print("Method insert for",mainVariable, "dictionary is", items, "with probabilities [0,1]")
 
 def main():
-    vars = ["Fog", "Human", "Test"]
+    vars = ["Fog", "Human"]
     iterate(vars, "Navigation")
 
 
