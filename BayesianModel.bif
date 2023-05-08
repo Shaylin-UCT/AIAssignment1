@@ -1,0 +1,161 @@
+network "unnamedBN" {
+// written by aGrUM 1.7.1
+}
+
+variable Waves {
+   type discrete[2] {0, 1};
+}
+
+variable HighWind {
+   type discrete[2] {0, 1};
+}
+
+variable Fog {
+   type discrete[2] {0, 1};
+}
+
+variable PackIce {
+   type discrete[2] {0, 1};
+}
+
+variable RidgeIceAndIceberg {
+   type discrete[2] {0, 1};
+}
+
+variable Collision {
+   type discrete[2] {0, 1};
+}
+
+variable Environment {
+   type discrete[2] {0, 1};
+}
+
+variable HighSpeed {
+   type discrete[2] {0, 1};
+}
+
+variable EquipmentError {
+   type discrete[2] {0, 1};
+}
+
+variable RadarFailure {
+   type discrete[2] {0, 1};
+}
+
+variable HumanError {
+   type discrete[2] {0, 1};
+}
+
+variable ShipFault {
+   type discrete[2] {0, 1};
+}
+
+variable Navigation {
+   type discrete[2] {0, 1};
+}
+
+variable Region {
+   type discrete[5] {region1, region2, region3, region4, region5};
+}
+
+probability (Waves | Region, Environment) {
+   (region1, 0) 0.9977 0.0023;
+   (region2, 0) 0.9947 0.0053;
+   (region3, 0) 0.999 0.001;
+   (region4, 0) 0.99917 0.00083;
+   (region5, 0) 0.9999 0.0001;
+   (region1, 1) 0.0023 0.9977;
+   (region2, 1) 0.0053 0.9947;
+   (region3, 1) 0.001 0.999;
+   (region4, 1) 0.00083 0.99917;
+   (region5, 1) 0.0001 0.9999;
+}
+probability (HighWind | Region, Environment) {
+   (region1, 0) 0.9983 0.0017;
+   (region2, 0) 0.9947 0.0053;
+   (region3, 0) 0.9983 0.0017;
+   (region4, 0) 0.9995 0.0005;
+   (region5, 0) 0.9999 0.0001;
+   (region1, 1) 0.0017 0.9983;
+   (region2, 1) 0.0053 0.9947;
+   (region3, 1) 0.0017 0.9983;
+   (region4, 1) 0.0005 0.9995;
+   (region5, 1) 0.0001 0.9999;
+}
+probability (Fog | Region, Environment) {
+   (region1, 0) 0.95 0.05;
+   (region2, 0) 0.99 0.01;
+   (region3, 0) 0.95 0.05;
+   (region4, 0) 0.99 0.01;
+   (region5, 0) 0.9995 0.0005;
+   (region1, 1) 0.05 0.95;
+   (region2, 1) 0.01 0.99;
+   (region3, 1) 0.05 0.95;
+   (region4, 1) 0.01 0.99;
+   (region5, 1) 0.0005 0.9995;
+}
+probability (PackIce | Region, Environment) {
+   (region1, 0) 0.9947 0.0053;
+   (region2, 0) 0.99 0.01;
+   (region3, 0) 0.9963 0.0037;
+   (region4, 0) 0.999 0.001;
+   (region5, 0) 0.9999 0.0001;
+   (region1, 1) 0.0053 0.9947;
+   (region2, 1) 0.01 0.99;
+   (region3, 1) 0.0037 0.9963;
+   (region4, 1) 0.001 0.999;
+   (region5, 1) 0.0001 0.9999;
+}
+probability (RidgeIceAndIceberg | Region, Environment) {
+   (region1, 0) 0.99 0.01;
+   (region2, 0) 0.99 0.01;
+   (region3, 0) 0.95 0.05;
+   (region4, 0) 0.99 0.01;
+   (region5, 0) 0.995 0.005;
+   (region1, 1) 0.01 0.99;
+   (region2, 1) 0.01 0.99;
+   (region3, 1) 0.05 0.95;
+   (region4, 1) 0.01 0.99;
+   (region5, 1) 0.005 0.995;
+}
+probability (Collision | Environment, ShipFault) {
+   (0, 0) 1 0;
+   (1, 0) 0.9 0.1;
+   (0, 1) 0.9 0.1;
+   (1, 1) 0.8 0.2;
+}
+probability (Environment) {
+   default 0.5753 0.4247;
+}
+probability (HighSpeed) {
+   default 0.9932 0.0068;
+}
+probability (EquipmentError) {
+   default 0.991437 0.008563;
+}
+probability (RadarFailure) {
+   default 0.9766 0.0234;
+}
+probability (HumanError) {
+   default 0.9926 0.0074;
+}
+probability (ShipFault | Navigation, RadarFailure) {
+   (0, 0) 1 0;
+   (1, 0) 0.25 0.75;
+   (0, 1) 0.5 0.5;
+   (1, 1) 0 1;
+}
+probability (Navigation | HumanError, EquipmentError, HighSpeed) {
+   (0, 0, 0) 0.999956 4.396e-05;
+   (1, 0, 0) 0.999956 4.396e-05;
+   (0, 1, 0) 0.999956 4.396e-05;
+   (1, 1, 0) 4.396e-05 0.999956;
+   (0, 0, 1) 0.999956 4.396e-05;
+   (1, 0, 1) 4.396e-05 0.999956;
+   (0, 1, 1) 4.396e-05 0.999956;
+   (1, 1, 1) 4.396e-05 0.999956;
+}
+probability (Region) {
+   default 0.2 0.2 0.2 0.2 0.2;
+}
+
